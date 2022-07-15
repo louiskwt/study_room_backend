@@ -1,19 +1,8 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
+const App = () => {
+  return <div>Hello Django and React</div>;
+};
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>This is the App.js</h1>
-      </div>
-    );
-  }
-}
+export default App;
 
 const appDiv = document.getElementById("app");
 render(<App />, appDiv);

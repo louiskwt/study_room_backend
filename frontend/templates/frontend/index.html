@@ -5,13 +5,22 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Testing DJREACT with Yarn</title>
+    <title>React Django</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
   <body>
     <div id="main">
       <div id="app"></div>
     </div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+
     <script src="{% static 'frontend/main.js' %}"></script>
   </body>
 </html>
