@@ -12,6 +12,36 @@ import { Link } from "react-router-dom";
 
 const CreateRoomPage = () => {
   const [vote, setVote] = useState(2);
+  const [canPause, setCanPause] = useState(true);
+
+  const handleVotesChange = (e) => {
+    setVote(e.target.value);
+  };
+
+  const handleGuestCanPauseChange = (e) => {
+    setCanPause(e.target.value === "true" ? true : false);
+  };
+
+  const handleRoomButtonPressed = () => {
+    const formState = {
+      votes_to_skip: vote,
+      guest_can_pause: canPause,
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formState),
+    };
+    fetch("/api/create-room", requestOptions)
+      .then((response) => {
+        response.json();
+        console.log(response);
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} align="center">
@@ -22,7 +52,11 @@ const CreateRoomPage = () => {
           <FormHelperText>
             <div align="center">Guest Control of Playback State</div>
           </FormHelperText>
-          <RadioGroup row defaultValue="true">
+          <RadioGroup
+            row
+            defaultValue="true"
+            onChange={handleGuestCanPauseChange}
+          >
             <FormControlLabel
               value="true"
               control={<Radio color="primary" />}
@@ -44,6 +78,7 @@ const CreateRoomPage = () => {
             required={true}
             type="number"
             defaultValue={vote}
+            onChange={handleVotesChange}
             inputProps={{ min: 1, style: { textAlign: "center" } }}
           />
           <FormHelperText>
@@ -52,7 +87,11 @@ const CreateRoomPage = () => {
         </FormControl>
       </Grid>
       <Grid item xs={12} align="center">
-        <Button color="primary" variant="contained">
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={handleRoomButtonPressed}
+        >
           Create a Room
         </Button>
       </Grid>

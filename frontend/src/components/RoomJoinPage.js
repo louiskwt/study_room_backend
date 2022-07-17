@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 // import { Link } from "react-router-dom";
 
 const RoomJoinPage = () => {
-  const [vote, setVote] = useState(2);
   return <Typography variant="h3">Join a room</Typography>;
 };
 
