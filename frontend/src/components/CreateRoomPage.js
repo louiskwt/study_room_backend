@@ -23,14 +23,13 @@ const CreateRoomPage = () => {
   };
 
   const handleRoomButtonPressed = () => {
-    const formState = {
-      votes_to_skip: vote,
-      guest_can_pause: canPause,
-    };
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formState),
+      body: JSON.stringify({
+        votes_to_skip: vote,
+        guest_can_pause: canPause,
+      }),
     };
     fetch("/api/create-room", requestOptions)
       .then((response) => {
