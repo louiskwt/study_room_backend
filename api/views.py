@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from .serializers import CreateRoomSerializer, RoomSerializer
 from .models import Room
+from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -13,6 +14,7 @@ class RoomView(generics.ListAPIView):
 
 class CreateRoomView(APIView):
     serializer_class = CreateRoomSerializer
+    renderer_classes = [JSONRenderer]
 
     def post(self, request, format=None):
         if not self.request.session.exists(self.request.session.session_key):
@@ -29,10 +31,14 @@ class CreateRoomView(APIView):
                 room.guest_can_pause = guest_can_pause
                 room.votes_to_skip = votes_to_skip
                 room.save(update_fields=['guest_can_pause', 'votes_to_skip'])
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                print(RoomSerializer(room).data)
+              
+                return Response({"data": RoomSerializer(room).data}, status=status.HTTP_200_OK)
             else:
                 room = Room(host=host, guest_can_pause=guest_can_pause, votes_to_skip=votes_to_skip)
                 room.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                # content = {'data': RoomSerializer(room).data}
+                print(RoomSerializer(room).data)
+                return Response({"data": RoomSerializer(room).data} , status=status.HTTP_201_CREATED)
             
         return Response({'Bad Request': "invalid data"}, status=status.HTTP_400_BAD_REQUEST)
